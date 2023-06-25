@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculator</title>
+    <style>
+        #inp {
+            text-align: center;
+            font-size: 60px;
+            margin-top: 2.5px;
+            margin-left: 1.25px;
+            height: 140px;
+            width: 490px;
+        }
+
+        #calc {
+            background-color: green;
+            height: 620px;
+            width: 550px;
+            position: absolute;
+        }
+
+        #screen {
+            background-color: white;
+            height: 150px;
+            width: 500px;
+            position: relative;
+            margin-top: 10px;
+            margin-left: 25px;
+        }
+
+        #buttons {
+            background-color: blue;
+            height: 435px;
+            width: 500px;
+            margin-top: 10px;
+            margin-left: 25px;
+        }
+
+        .button {
+            margin-top: 5.5px;
+            font-family: 'Lucida Sans';
+            width: 115px;
+            height: 80px;
+            margin-left: 5.5px;
+            font-size: 30px;
+        }
+
+        #ac {
+            margin-top: 5.5px;
+            font-family: 'Lucida Sans';
+            font-weight: 50px;
+            width: 115px;
+            height: 80px;
+            margin-left: 80px;
+            font-size: 30px;
+        }
+
+        #equal {
+            margin-top: 5.5px;
+            font-family: 'Lucida Sans';
+            font-weight: 50px;
+            width: 115px;
+            height: 80px;
+            margin-left: 100px;
+            font-size: 30px;
+        }
+    </style>
+</head>
+
+<body style="margin-left: 480px;" ;>
+    <div id="calc">
+        <div id="screen">
+            <input type="text" name="scr" id="inp" />
+            <!-- <div id="inp">
+
+            </div> -->
+        </div>
+
+        <div id="buttons">
+            <div id="row1">
+                <button class="button" value="/" onclick="enter(this.value)">/</button>
+                <button class="button" value="*" onclick="enter(this.value)">x</button>
+                <button class="button" value="-" onclick="enter(this.value)">-</button>
+                <button class="button" value="+" onclick="enter(this.value)">+</button>
+            </div>
+            <div id="row2">
+                <button class="button" value="1" onclick="enter(this.value)">1</button>
+                <button class="button" value="2" onclick="enter(this.value)">2</button>
+                <button class="button" value="3" onclick="enter(this.value)">3</button>
+                <button class="button" value="4" onclick="enter(this.value)">4</button>
+            </div>
+            <div id="row3">
+                <button class="button" value="5" onclick="enter(this.value)">5</button>
+                <button class="button" value="6" onclick="enter(this.value)">6</button>
+                <button class="button" value="7" onclick="enter(this.value)">7</button>
+                <button class="button" value="8" onclick="enter(this.value)">8</button>
+            </div>
+            <div id="row4">
+                <button class="button" value="9" onclick="enter(this.value)">9</button>
+                <button class="button" value="0" onclick="enter(this.value)">0</button>
+                <button class="button" value="." onclick="enter(this.value)">.</button>
+                <button class="button" value="d" onclick="del()">del</button>
+            </div>
+            <button id="ac" onclick="ac()">AC</button>
+            <button id="equal" onclick="equals()">=</button>
+        </div>
+    </div>
+</body>
+<script>
+    document.addEventListener('keypress', (event) => {
+        var name = event.key;
+        var code = event.code;
+        if (name === "Enter") equals();
+    }, false);
+
+    function ac() {
+        document.getElementById("inp").value = "";
+    }
+    function enter(val) {
+        document.getElementById("inp").style.color = "black";
+        var inp = document.getElementById("inp").value += val;
+    }
+    function del() {
+        var inp = document.getElementById("inp").value;
+        var newInp = inp.substring(0, inp.length - 1);
+        document.getElementById("inp").value = newInp;
+    }
+    function equals() {
+        var eqn = document.getElementById("inp").value;
+        var check = false;
+        if (eqn.length === 0) {
+            check = true;
+            alert("Enter the Expression");
+        }
+        var dec = false;
+        var i = 0;
+        let first = "";
+        while (i < eqn.length) {
+            if (eqn.charAt(i) === '.') dec = true;
+
+            if (eqn.charAt(i) === '/' || eqn.charAt(i) === '*' || eqn.charAt(i) === '-' || eqn.charAt(i) === '+') break;
+            first += eqn.charAt(i);
+            i++;
+        }
+        let op = eqn.charAt(i);
+        i++;
+        let second = "";
+        while (i < eqn.length) {
+            second += eqn.charAt(i);
+            i++;
+        }
+        let ans;
+        if (!dec) {
+            if (op === '/') ans = parseInt(first) / parseInt(second);
+            else if (op === '*') ans = parseFloat(first) * parseInt(second);
+            else if (op === '-') ans = parseInt(first) - parseInt(second);
+            else if (op === '+') ans = parseInt(first) + parseInt(second);
+            else ans = "Wrong Expression"
+        } else {
+            if (op === '/') ans = parseFloat(first) / parseFloat(second);
+            else if (op === '*') ans = parseFloat(first) * parseFloat(second);
+            else if (op === '-') ans = parseFloat(first) - parseFloat(second);
+            else if (op === '+') ans = parseFloat(first) + parseFloat(second);
+            else ans = "Wrong Expression"
+        }
+        if(!check)
+        document.getElementById("inp").value = ans;
+    }
+</script>
+
+</html>
